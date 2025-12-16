@@ -1,0 +1,17 @@
+{
+  "functions": {
+    "api/submit.js": {
+      "runtime": "nodejs20.x"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/submit",
+      "destination": "/api/submit.js"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
