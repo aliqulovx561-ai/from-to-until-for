@@ -1,8 +1,8 @@
 {
-  "name": "english-test-system",
+  "name": "english-test-app",
   "version": "1.0.0",
   "engines": {
-    "node": ">=20.x"
+    "node": "20.x"
   },
   "dependencies": {
     "node-fetch": "^3.3.2"
