@@ -3,404 +3,473 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Test System</title>
+    <title>English Test</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
-        .container { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        .screen { display: none; }
-        .active { display: block; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
         
-        /* Login Screen */
-        .login-box { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-        .login-box h1 { color: #4a5568; margin-bottom: 10px; text-align: center; }
-        .login-box h2 { color: #667eea; margin-bottom: 30px; text-align: center; }
-        .warning-box { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin-bottom: 30px; border-radius: 5px; }
-        .warning-box h3 { color: #856404; margin-bottom: 10px; }
-        .warning-box ul { padding-left: 20px; }
-        .warning-box li { margin-bottom: 5px; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 5px; font-weight: 600; color: #4a5568; }
-        .form-group input[type="text"] { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 16px; }
-        .btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 30px;
+        }
         
-        /* Test Screen */
-        .test-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 20px; border-radius: 10px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-        .timer { font-size: 28px; font-weight: bold; font-family: monospace; }
-        .leave-warning { font-size: 14px; background: rgba(255, 255, 255, 0.2); padding: 3px 10px; border-radius: 15px; }
-        .instructions { background: #f7fafc; padding: 15px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #4299e1; }
-        .question { background: #f7fafc; padding: 20px; margin-bottom: 20px; border-radius: 10px; border: 1px solid #e2e8f0; }
-        .question h3 { color: #2d3748; margin-bottom: 15px; }
-        .question label { display: block; padding: 8px 0; cursor: pointer; }
-        .btn-submit { padding: 15px 40px; background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; margin: 40px auto; display: block; }
+        .screen {
+            display: none;
+        }
         
-        /* Result Screen */
-        .result-box { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center; }
-        .result-box h2 { color: #48bb78; margin-bottom: 20px; }
+        .screen.active {
+            display: block;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        h2 {
+            color: #3498db;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .warning-box {
+            background: #fff8e1;
+            border: 2px solid #ffc107;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .warning-box h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #34495e;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+        
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+        }
+        
+        .btn-submit {
+            background: #2ecc71;
+        }
+        
+        .btn-submit:hover {
+            background: #27ae60;
+        }
+        
+        .test-header {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .timer {
+            font-size: 24px;
+            font-family: monospace;
+            font-weight: bold;
+            background: #34495e;
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
+        
+        .leave-warning {
+            background: #e74c3c;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .question {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .question h3 {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .question label {
+            display: block;
+            padding: 8px 0;
+            cursor: pointer;
+        }
+        
+        .result-box {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .result-box h2 {
+            color: #2ecc71;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <!-- Login Screen -->
         <div id="loginScreen" class="screen active">
-            <div class="login-box">
-                <h1>📝 English Test System</h1>
-                <h2>Prepositions of Time Test</h2>
-                
-                <div class="warning-box">
-                    <h3>⚠️ Important Instructions:</h3>
-                    <ul>
-                        <li>You will have <strong>15 minutes</strong> to complete the test</li>
-                        <li>Do NOT switch tabs or leave the test page</li>
-                        <li>If you leave the page <strong>more than 3 times</strong>, your test will be automatically submitted</li>
-                        <li>All questions are multiple choice</li>
-                        <li>Timer will start as soon as you begin the test</li>
-                    </ul>
-                </div>
-                
-                <div class="form-group">
-                    <label for="studentName">Full Name:</label>
-                    <input type="text" id="studentName" required placeholder="Enter your full name">
-                </div>
-                
-                <div class="form-group">
-                    <label for="studentGroup">Group/Class:</label>
-                    <input type="text" id="studentGroup" required placeholder="e.g., Group A, Class 10B">
-                </div>
-                
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" id="agreeTerms" required>
-                        I understand and agree to the test rules
-                    </label>
-                </div>
-                
-                <button onclick="startTest()" class="btn">Start Test</button>
+            <h1>📝 English Grammar Test</h1>
+            <h2>Prepositions of Time</h2>
+            
+            <div class="warning-box">
+                <h3>⚠️ Important Rules:</h3>
+                <ul>
+                    <li>15 minute time limit</li>
+                    <li>20 multiple choice questions</li>
+                    <li>Do NOT leave this page during test</li>
+                    <li>3 page leaves = auto-submit</li>
+                    <li>Timer starts immediately</li>
+                </ul>
             </div>
+            
+            <div class="form-group">
+                <label>Full Name:</label>
+                <input type="text" id="nameInput" placeholder="John Smith">
+            </div>
+            
+            <div class="form-group">
+                <label>Group/Class:</label>
+                <input type="text" id="groupInput" placeholder="Group A, Class 10B">
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="agreeCheckbox">
+                    I agree to the test rules
+                </label>
+            </div>
+            
+            <button class="btn" onclick="startTest()">Start Test</button>
         </div>
         
         <!-- Test Screen -->
         <div id="testScreen" class="screen">
             <div class="test-header">
-                <div class="student-info">
-                    <span id="displayName"></span> | <span id="displayGroup"></span>
+                <div>
+                    <strong id="studentNameDisplay"></strong> - 
+                    <span id="studentGroupDisplay"></span>
                 </div>
-                <div class="timer-container">
-                    <div class="timer" id="timer">15:00</div>
-                    <div class="leave-warning" id="leaveWarning">
-                        Page leaves: <span id="leaveCount">0</span>/3
-                    </div>
+                <div>
+                    <span class="timer" id="timer">15:00</span>
+                    <span class="leave-warning" id="leaveCount">Leaves: 0/3</span>
                 </div>
-            </div>
-            
-            <div class="instructions">
-                <p><strong>Instructions:</strong> Choose the correct word or words to complete each sentence.</p>
             </div>
             
             <form id="testForm">
-                <!-- Questions 1-10 -->
-                <div class="question">
-                    <h3>1. The library is open ______ 10 a.m. ______ 8 p.m.</h3>
-                    <label><input type="radio" name="q1" value="a"> a) since / for</label>
-                    <label><input type="radio" name="q1" value="b"> b) from / to</label>
-                    <label><input type="radio" name="q1" value="c"> c) for / until</label>
-                    <label><input type="radio" name="q1" value="d"> d) since / until</label>
-                </div>
-                
-                <div class="question">
-                    <h3>2. I have studied English ______ three years.</h3>
-                    <label><input type="radio" name="q2" value="a"> a) from</label>
-                    <label><input type="radio" name="q2" value="b"> b) since</label>
-                    <label><input type="radio" name="q2" value="c"> c) until</label>
-                    <label><input type="radio" name="q2" value="d"> d) for</label>
-                </div>
-                
-                <div class="question">
-                    <h3>3. She has lived here ______ 2020.</h3>
-                    <label><input type="radio" name="q3" value="a"> a) for</label>
-                    <label><input type="radio" name="q3" value="b"> b) until</label>
-                    <label><input type="radio" name="q3" value="c"> c) since</label>
-                    <label><input type="radio" name="q3" value="d"> d) from</label>
-                </div>
-                
-                <div class="question">
-                    <h3>4. We watched a movie ______ two hours.</h3>
-                    <label><input type="radio" name="q4" value="a"> a) from</label>
-                    <label><input type="radio" name="q4" value="b"> b) since</label>
-                    <label><input type="radio" name="q4" value="c"> c) for</label>
-                    <label><input type="radio" name="q4" value="d"> d) until</label>
-                </div>
-                
-                <div class="question">
-                    <h3>5. Please wait ______ I finish my work.</h3>
-                    <label><input type="radio" name="q5" value="a"> a) for</label>
-                    <label><input type="radio" name="q5" value="b"> b) from</label>
-                    <label><input type="radio" name="q5" value="c"> c) until</label>
-                    <label><input type="radio" name="q5" value="d"> d) since</label>
-                </div>
-                
-                <div class="question">
-                    <h3>6. The concert lasted ______ 7 p.m. ______ 10 p.m.</h3>
-                    <label><input type="radio" name="q6" value="a"> a) for / to</label>
-                    <label><input type="radio" name="q6" value="b"> b) from / to</label>
-                    <label><input type="radio" name="q6" value="c"> c) since / for</label>
-                    <label><input type="radio" name="q6" value="d"> d) until / since</label>
-                </div>
-                
-                <div class="question">
-                    <h3>7. They will be on vacation ______ next Friday.</h3>
-                    <label><input type="radio" name="q7" value="a"> a) for</label>
-                    <label><input type="radio" name="q7" value="b"> b) to</label>
-                    <label><input type="radio" name="q7" value="c"> c) since</label>
-                    <label><input type="radio" name="q7" value="d"> d) until</label>
-                </div>
-                
-                <div class="question">
-                    <h3>8. I worked at that company ______ 2018 ______ 2021.</h3>
-                    <label><input type="radio" name="q8" value="a"> a) since / for</label>
-                    <label><input type="radio" name="q8" value="b"> b) from / to</label>
-                    <label><input type="radio" name="q8" value="c"> c) for / until</label>
-                    <label><input type="radio" name="q8" value="d"> d) since / until</label>
-                </div>
-                
-                <div class="question">
-                    <h3>9. He slept ______ only five hours last night.</h3>
-                    <label><input type="radio" name="q9" value="a"> a) since</label>
-                    <label><input type="radio" name="q9" value="b"> b) until</label>
-                    <label><input type="radio" name="q9" value="c"> c) for</label>
-                    <label><input type="radio" name="q9" value="d"> d) from</label>
-                </div>
-                
-                <div class="question">
-                    <h3>10. I haven't eaten anything ______ breakfast.</h3>
-                    <label><input type="radio" name="q10" value="a"> a) for</label>
-                    <label><input type="radio" name="q10" value="b"> b) since</label>
-                    <label><input type="radio" name="q10" value="c"> c) until</label>
-                    <label><input type="radio" name="q10" value="d"> d) from</label>
-                </div>
-                
-                <!-- Questions 11-20 -->
-                <div class="question">
-                    <h3>11. The season runs ______ spring ______ autumn.</h3>
-                    <label><input type="radio" name="q11" value="a"> a) for / to</label>
-                    <label><input type="radio" name="q11" value="b"> b) from / to</label>
-                    <label><input type="radio" name="q11" value="c"> c) since / for</label>
-                    <label><input type="radio" name="q11" value="d"> d) until / since</label>
-                </div>
-                
-                <div class="question">
-                    <h3>12. Can you stay with me ______ the bus comes?</h3>
-                    <label><input type="radio" name="q12" value="a"> a) for</label>
-                    <label><input type="radio" name="q12" value="b"> b) since</label>
-                    <label><input type="radio" name="q12" value="c"> c) until</label>
-                    <label><input type="radio" name="q12" value="d"> d) from</label>
-                </div>
-                
-                <div class="question">
-                    <h3>13. We drove ______ six hours to get to the beach.</h3>
-                    <label><input type="radio" name="q13" value="a"> a) from</label>
-                    <label><input type="radio" name="q13" value="b"> b) since</label>
-                    <label><input type="radio" name="q13" value="c"> c) until</label>
-                    <label><input type="radio" name="q13" value="d"> d) for</label>
-                </div>
-                
-                <div class="question">
-                    <h3>14. She has been my teacher ______ last September.</h3>
-                    <label><input type="radio" name="q14" value="a"> a) for</label>
-                    <label><input type="radio" name="q14" value="b"> b) from</label>
-                    <label><input type="radio" name="q14" value="c"> c) until</label>
-                    <label><input type="radio" name="q14" value="d"> d) since</label>
-                </div>
-                
-                <div class="question">
-                    <h3>15. The shop is closed ______ 1 p.m. ______ 2 p.m. for lunch.</h3>
-                    <label><input type="radio" name="q15" value="a"> a) for / to</label>
-                    <label><input type="radio" name="q15" value="b"> b) from / to</label>
-                    <label><input type="radio" name="q15" value="c"> c) since / for</label>
-                    <label><input type="radio" name="q15" value="d"> d) until / since</label>
-                </div>
-                
-                <div class="question">
-                    <h3>16. I will read this book ______ the end of the week.</h3>
-                    <label><input type="radio" name="q16" value="a"> a) for</label>
-                    <label><input type="radio" name="q16" value="b"> b) until</label>
-                    <label><input type="radio" name="q16" value="c"> c) since</label>
-                    <label><input type="radio" name="q16" value="d"> d) from</label>
-                </div>
-                
-                <div class="question">
-                    <h3>17. They talked on the phone ______ 30 minutes.</h3>
-                    <label><input type="radio" name="q17" value="a"> a) from</label>
-                    <label><input type="radio" name="q17" value="b"> b) since</label>
-                    <label><input type="radio" name="q17" value="c"> c) for</label>
-                    <label><input type="radio" name="q17" value="d"> d) until</label>
-                </div>
-                
-                <div class="question">
-                    <h3>18. He has been gone ______ a long time.</h3>
-                    <label><input type="radio" name="q18" value="a"> a) until</label>
-                    <label><input type="radio" name="q18" value="b"> b) for</label>
-                    <label><input type="radio" name="q18" value="c"> c) since</label>
-                    <label><input type="radio" name="q18" value="d"> d) from</label>
-                </div>
-                
-                <div class="question">
-                    <h3>19. My class is ______ Monday ______ Wednesday.</h3>
-                    <label><input type="radio" name="q19" value="a"> a) since / for</label>
-                    <label><input type="radio" name="q19" value="b"> b) from / to</label>
-                    <label><input type="radio" name="q19" value="c"> c) for / until</label>
-                    <label><input type="radio" name="q19" value="d"> d) since / until</label>
-                </div>
-                
-                <div class="question">
-                    <h3>20. I didn't see her ______ last year's party.</h3>
-                    <label><input type="radio" name="q20" value="a"> a) for</label>
-                    <label><input type="radio" name="q20" value="b"> b) until</label>
-                    <label><input type="radio" name="q20" value="c"> c) since</label>
-                    <label><input type="radio" name="q20" value="d"> d) from</label>
-                </div>
-                
-                <button type="submit" class="btn-submit">Submit Test</button>
+                <!-- Questions will be generated here -->
             </form>
+            
+            <button class="btn btn-submit" onclick="submitTest()">Submit Test</button>
         </div>
         
         <!-- Result Screen -->
         <div id="resultScreen" class="screen">
             <div class="result-box">
-                <h2>✅ Test Submitted Successfully!</h2>
-                <p id="resultMessage">Your answers have been submitted. The teacher has been notified via Telegram.</p>
-                <p><strong>Time taken:</strong> <span id="timeTaken"></span></p>
-                <p><strong>Page leaves:</strong> <span id="finalLeaves"></span></p>
-                <button onclick="restartTest()" class="btn">Take Test Again</button>
+                <h2>✅ Test Submitted</h2>
+                <p>Results sent to teacher via Telegram.</p>
+                <p><strong>Time:</strong> <span id="finalTime">0:00</span></p>
+                <p><strong>Leaves:</strong> <span id="finalLeaves">0</span></p>
+                <button class="btn" onclick="restartTest()">Take Again</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Application state
-        let studentInfo = {};
+        // Test data - 20 questions
+        const questions = [
+            {
+                q: "The library is open ______ 10 a.m. ______ 8 p.m.",
+                options: ["since / for", "from / to", "for / until", "since / until"],
+                correct: 1
+            },
+            {
+                q: "I have studied English ______ three years.",
+                options: ["from", "since", "until", "for"],
+                correct: 3
+            },
+            {
+                q: "She has lived here ______ 2020.",
+                options: ["for", "until", "since", "from"],
+                correct: 2
+            },
+            {
+                q: "We watched a movie ______ two hours.",
+                options: ["from", "since", "for", "until"],
+                correct: 2
+            },
+            {
+                q: "Please wait ______ I finish my work.",
+                options: ["for", "from", "until", "since"],
+                correct: 2
+            },
+            {
+                q: "The concert lasted ______ 7 p.m. ______ 10 p.m.",
+                options: ["for / to", "from / to", "since / for", "until / since"],
+                correct: 1
+            },
+            {
+                q: "They will be on vacation ______ next Friday.",
+                options: ["for", "to", "since", "until"],
+                correct: 3
+            },
+            {
+                q: "I worked at that company ______ 2018 ______ 2021.",
+                options: ["since / for", "from / to", "for / until", "since / until"],
+                correct: 1
+            },
+            {
+                q: "He slept ______ only five hours last night.",
+                options: ["since", "until", "for", "from"],
+                correct: 2
+            },
+            {
+                q: "I haven't eaten anything ______ breakfast.",
+                options: ["for", "since", "until", "from"],
+                correct: 1
+            },
+            {
+                q: "The season runs ______ spring ______ autumn.",
+                options: ["for / to", "from / to", "since / for", "until / since"],
+                correct: 1
+            },
+            {
+                q: "Can you stay with me ______ the bus comes?",
+                options: ["for", "since", "until", "from"],
+                correct: 2
+            },
+            {
+                q: "We drove ______ six hours to get to the beach.",
+                options: ["from", "since", "until", "for"],
+                correct: 3
+            },
+            {
+                q: "She has been my teacher ______ last September.",
+                options: ["for", "from", "until", "since"],
+                correct: 3
+            },
+            {
+                q: "The shop is closed ______ 1 p.m. ______ 2 p.m. for lunch.",
+                options: ["for / to", "from / to", "since / for", "until / since"],
+                correct: 1
+            },
+            {
+                q: "I will read this book ______ the end of the week.",
+                options: ["for", "until", "since", "from"],
+                correct: 1
+            },
+            {
+                q: "They talked on the phone ______ 30 minutes.",
+                options: ["from", "since", "for", "until"],
+                correct: 2
+            },
+            {
+                q: "He has been gone ______ a long time.",
+                options: ["until", "for", "since", "from"],
+                correct: 1
+            },
+            {
+                q: "My class is ______ Monday ______ Wednesday.",
+                options: ["since / for", "from / to", "for / until", "since / until"],
+                correct: 1
+            },
+            {
+                q: "I didn't see her ______ last year's party.",
+                options: ["for", "until", "since", "from"],
+                correct: 2
+            }
+        ];
+
+        // App state
+        let studentName = "";
+        let studentGroup = "";
         let pageLeaves = 0;
-        let timeLeft = 15 * 60; // 15 minutes in seconds
-        let timerInterval;
-        let testStarted = false;
-        
-        // Answer key
-        const answerKey = {
-            q1: 'b', q2: 'd', q3: 'c', q4: 'c', q5: 'c',
-            q6: 'b', q7: 'd', q8: 'b', q9: 'c', q10: 'b',
-            q11: 'b', q12: 'c', q13: 'd', q14: 'd', q15: 'b',
-            q16: 'b', q17: 'c', q18: 'b', q19: 'b', q20: 'c'
-        };
-        
-        // Screen management
+        let timeLeft = 900; // 15 minutes in seconds
+        let timer = null;
+        let answers = new Array(20).fill(null);
+
+        // Show screen helper
         function showScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(screen => {
-                screen.classList.remove('active');
+            document.querySelectorAll('.screen').forEach(s => {
+                s.classList.remove('active');
             });
             document.getElementById(screenId).classList.add('active');
         }
-        
+
         // Start test
         function startTest() {
-            const name = document.getElementById('studentName').value.trim();
-            const group = document.getElementById('studentGroup').value.trim();
-            const agree = document.getElementById('agreeTerms').checked;
+            const name = document.getElementById('nameInput').value.trim();
+            const group = document.getElementById('groupInput').value.trim();
+            const agreed = document.getElementById('agreeCheckbox').checked;
             
             if (!name || !group) {
-                alert('Please enter your name and group');
+                alert('Please enter name and group');
+                return;
+            }
+            if (!agreed) {
+                alert('Please agree to the rules');
                 return;
             }
             
-            if (!agree) {
-                alert('You must agree to the test rules');
-                return;
-            }
+            studentName = name;
+            studentGroup = group;
             
-            studentInfo = { name, group };
-            pageLeaves = 0;
-            testStarted = false;
+            // Display student info
+            document.getElementById('studentNameDisplay').textContent = name;
+            document.getElementById('studentGroupDisplay').textContent = group;
             
-            document.getElementById('displayName').textContent = name;
-            document.getElementById('displayGroup').textContent = group;
-            document.getElementById('leaveCount').textContent = pageLeaves;
+            // Generate questions
+            const form = document.getElementById('testForm');
+            form.innerHTML = '';
             
-            showScreen('testScreen');
+            questions.forEach((question, index) => {
+                const div = document.createElement('div');
+                div.className = 'question';
+                div.innerHTML = `
+                    <h3>${index + 1}. ${question.q}</h3>
+                    ${question.options.map((opt, optIndex) => `
+                        <label>
+                            <input type="radio" name="q${index}" value="${optIndex}" 
+                                   onchange="saveAnswer(${index}, ${optIndex})">
+                            ${String.fromCharCode(97 + optIndex)}) ${opt}
+                        </label>
+                    `).join('')}
+                `;
+                form.appendChild(div);
+            });
+            
+            // Start timer and tracking
             startTimer();
             startPageLeaveTracking();
-        }
-        
-        // Timer functions
-        function startTimer() {
-            if (testStarted) return;
-            testStarted = true;
             
-            timerInterval = setInterval(() => {
+            // Show test screen
+            showScreen('testScreen');
+        }
+
+        // Timer
+        function startTimer() {
+            updateTimerDisplay();
+            timer = setInterval(() => {
                 timeLeft--;
-                
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                document.getElementById('timer').textContent = 
-                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                updateTimerDisplay();
                 
                 if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
+                    clearInterval(timer);
                     submitTest();
                 }
             }, 1000);
         }
         
+        function updateTimerDisplay() {
+            const min = Math.floor(timeLeft / 60);
+            const sec = timeLeft % 60;
+            document.getElementById('timer').textContent = 
+                `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+        }
+
         // Page leave tracking
         function startPageLeaveTracking() {
             document.addEventListener('visibilitychange', () => {
                 if (document.hidden) {
                     pageLeaves++;
-                    document.getElementById('leaveCount').textContent = pageLeaves;
+                    document.getElementById('leaveCount').textContent = `Leaves: ${pageLeaves}/3`;
                     
                     if (pageLeaves === 1) {
-                        alert('Warning! You have left the page. Do this 2 more times and your test will be auto-submitted.');
+                        alert('Warning! 1st page leave. 2 more = auto-submit.');
                     } else if (pageLeaves === 2) {
-                        alert('Final warning! One more page leave will auto-submit your test!');
+                        alert('Final warning! Next leave = auto-submit.');
                     } else if (pageLeaves >= 3) {
-                        alert('You have left the page too many times. Test will be submitted automatically.');
+                        alert('Too many page leaves. Auto-submitting...');
                         submitTest();
                     }
                 }
             });
         }
-        
+
+        // Save answer
+        function saveAnswer(questionIndex, answerIndex) {
+            answers[questionIndex] = answerIndex;
+        }
+
         // Submit test
         async function submitTest() {
-            clearInterval(timerInterval);
-            
-            // Collect answers
-            const answers = {};
-            for (let i = 1; i <= 20; i++) {
-                const question = `q${i}`;
-                const selected = document.querySelector(`input[name="${question}"]:checked`);
-                answers[question] = selected ? selected.value : 'unanswered';
-            }
+            clearInterval(timer);
             
             // Calculate score
             let score = 0;
-            for (let i = 1; i <= 20; i++) {
-                if (answers[`q${i}`] === answerKey[`q${i}`]) {
+            questions.forEach((q, i) => {
+                if (answers[i] === q.correct) {
                     score++;
                 }
-            }
+            });
             
             const percentage = (score / 20) * 100;
-            const timeTaken = 15 * 60 - timeLeft;
+            const timeUsed = 900 - timeLeft;
             
-            // Prepare submission data
-            const submissionData = {
-                studentName: studentInfo.name,
-                studentGroup: studentInfo.group,
-                answers: answers,
+            // Prepare data
+            const testData = {
+                name: studentName,
+                group: studentGroup,
                 score: score,
-                percentage: percentage,
-                timeTaken: timeTaken,
-                pageLeaves: pageLeaves,
-                submittedAt: new Date().toISOString()
+                percentage: percentage.toFixed(1),
+                time: timeUsed,
+                leaves: pageLeaves,
+                answers: answers,
+                timestamp: new Date().toISOString()
             };
             
             // Send to API
@@ -410,61 +479,47 @@
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(submissionData)
+                    body: JSON.stringify(testData)
                 });
                 
-                if (!response.ok) {
-                    throw new Error('Submission failed');
-                }
+                console.log('API response:', response.status);
                 
-                // Show result
-                document.getElementById('timeTaken').textContent = 
-                    `${Math.floor(timeTaken / 60)}:${(timeTaken % 60).toString().padStart(2, '0')}`;
+                // Show results
+                const min = Math.floor(timeUsed / 60);
+                const sec = timeUsed % 60;
+                document.getElementById('finalTime').textContent = `${min}:${sec.toString().padStart(2, '0')}`;
                 document.getElementById('finalLeaves').textContent = pageLeaves;
+                
                 showScreen('resultScreen');
                 
             } catch (error) {
-                alert('Submission failed: ' + error.message);
-                // Still show result screen even if API fails
-                document.getElementById('timeTaken').textContent = 
-                    `${Math.floor(timeTaken / 60)}:${(timeTaken % 60).toString().padStart(2, '0')}`;
-                document.getElementById('finalLeaves').textContent = pageLeaves;
-                document.getElementById('resultMessage').textContent = 
-                    'Your answers have been recorded. There was an issue sending to Telegram.';
+                console.error('Submission error:', error);
+                // Still show results even if API fails
                 showScreen('resultScreen');
             }
         }
-        
+
         // Restart test
         function restartTest() {
-            // Reset form
-            document.getElementById('testForm').reset();
-            document.getElementById('studentName').value = '';
-            document.getElementById('studentGroup').value = '';
-            document.getElementById('agreeTerms').checked = false;
+            // Reset everything
+            studentName = "";
+            studentGroup = "";
+            pageLeaves = 0;
+            timeLeft = 900;
+            answers = new Array(20).fill(null);
             
-            // Reset timer
-            timeLeft = 15 * 60;
-            document.getElementById('timer').textContent = '15:00';
+            // Clear inputs
+            document.getElementById('nameInput').value = "";
+            document.getElementById('groupInput').value = "";
+            document.getElementById('agreeCheckbox').checked = false;
             
+            // Reset timer display
+            document.getElementById('timer').textContent = "15:00";
+            document.getElementById('leaveCount').textContent = "Leaves: 0/3";
+            
+            // Show login screen
             showScreen('loginScreen');
         }
-        
-        // Form submission
-        document.getElementById('testForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            if (confirm('Are you sure you want to submit your test?')) {
-                submitTest();
-            }
-        });
-        
-        // Prevent accidental navigation
-        window.addEventListener('beforeunload', function(e) {
-            if (testStarted) {
-                e.preventDefault();
-                e.returnValue = 'Your test is in progress. Are you sure you want to leave?';
-            }
-        });
     </script>
 </body>
 </html>
